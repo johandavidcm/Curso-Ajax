@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    let editar = false;
     obtenerTareas();
     $('#task-result').hide();
     $('#search').keyup(function(e){
@@ -40,15 +39,10 @@ $(document).ready(function(){
             nombre      : $('#name').val(),
             descripcion : $('#descripcion').val(),
             id          : $('#id').val()
-
         };
-        let url = editar === false ? '../php/task-add.php' : '../php/task-edit.php';
-        $.post(url, datos, function(respuesta){{
+        $.post('../php/task-add.php', datos, function(respuesta){{
             $("#task-form").trigger('reset');
             obtenerTareas();
-            if(url=="../php/task-edit.php"){
-                editar = false;
-            }
         }});
     });
 
@@ -63,38 +57,49 @@ $(document).ready(function(){
                     template += `<tr taskId="${tarea.id}">
                                     <td>${tarea.id}</td>
                                     <td>
-                                        <a href="#" class="task-item">${tarea.nombre}</a>
+                                        <a href="#" class="task-item" data-toggle="modal" data-target="#actualizacion">${tarea.nombre}</a>
                                     </td>
                                     <td>${tarea.descripcion}</td>
                                     <td>
-                                        <button class=" task-delete btn btn-danger">Eliminar</button>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#confirmacion" onClick="eliminarRegistro(\'${tarea.id}\',)">Eliminar</button>
                                     </td>
+                                    
                                 </tr>`;
                 });
                 $('#task').html(template);
             }
         });
     }
-
-    $(document).on('click', '.task-delete', function(){
-        if(confirm('¿Esta seguro de la eliminacion de esta tarea?')){
-            let elemento = $(this)[0].parentElement.parentElement;
-            let id = $(elemento).attr('taskId');
-            $.post('../php/task-delete.php', {id}, function(respuesta) {
-                obtenerTareas();
-            });
-        }
-    });
     $(document).on('click', '.task-item',function(){
         let elemento = $(this)[0].parentElement.parentElement;
         let id = $(elemento).attr('taskId');
         $.post('../php/task-single.php', {id}, function(respuesta) {
             let tarea = JSON.parse(respuesta);
-            $('#name').val(tarea.nombre);
-            $('#descripcion').val(tarea.descripcion);
-            $('#id').val(tarea.id);
-            editar = true;
-            obtenerTareas();
+            $('#nombreModal').val(tarea.nombre);
+            $('#descripcionModal').val(tarea.descripcion);
+            $('#idModal').val(tarea.id);
         });
     });
+    eliminar = false;
+    eliminarRegistro = function(id){
+        $("#eliminarModal").on('click', function(){
+            $.post('../php/task-delete.php', { id }, function(respuesta) {
+                obtenerTareas();
+                $('#confirmacion').modal('hide');
+            });
+        });
+    };
+    $('#actualizarModal').on('click', function(){
+        const datos = {
+            nombre      : $('#nombreModal').val(),
+            descripcion : $('#descripcionModal').val(),
+            id          : $('#idModal').val()
+        };
+        $.post('../php/task-edit.php', datos, function(respuesta){{
+            $("#actualizarForm").trigger('reset');
+            $('#actualizacion').modal('hide');
+            obtenerTareas();
+        }});
+    });
+
 });

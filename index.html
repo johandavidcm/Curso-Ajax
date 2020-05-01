@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task app</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Task app</a>
@@ -27,7 +29,8 @@
                                 <input class="form-control" type="text" id="name" placeholder="Nombre de la tarea">
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Descripcion de la tarea" id="descripcion" cols="30" rows="10"></textarea>
+                                <textarea class="form-control" placeholder="Descripcion de la tarea" id="descripcion"
+                                    cols="30" rows="10"></textarea>
                             </div>
                             <button class="btn btn-primary btn-block text-center" type="submit">Guardar Tarea</button>
                         </form>
@@ -48,12 +51,77 @@
                             <td>Descripción</td>
                         </tr>
                     </thead>
-                    <tbody id="task"></tbody>
+                    <tbody id="task">
+                    </tbody>
                 </table>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="confirmacion" tabindex="-1" role="dialog" aria-labelledby="confirmacionLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmacionLabel">Eliminar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Esta seguro de que desea eliminar este registro? <p id="idConfirmacion"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="eliminarModal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="actualizacion" tabindex="-1" role="dialog" aria-labelledby="confirmacionLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmacionLabel">Actualizar Tarea</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="actualizarForm">
+                            <div class="form-group">
+                              <label for="idModal" class="col-form-label">Identificador de la tarea:</label>
+                              <input type="text" class="form-control" id="idModal" disabled>
+                            </div>
+                            <div class="form-group">
+                              <label for="nombreModal" class="col-form-label">Nombre de la tarea:</label>
+                              <input type="text" class="form-control" id="nombreModal">
+                            </div>
+                            <div class="form-group">
+                              <label for="descripcionModal" class="col-form-label">Descripción de la tarea:</label>
+                              <textarea class="form-control" id="descripcionModal"></textarea>
+                            </div>
+                          </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="actualizarModal">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
     <script src="js/app.js"></script>
 </body>
+
 </html>
